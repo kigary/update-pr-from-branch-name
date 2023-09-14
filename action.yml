@@ -7,21 +7,31 @@ inputs:
     description: The GITHUB_TOKEN secret
     required: true
   branch-prefix:
-    description: The prefix of branch name | pass a comma separated list to match multiple prefixes
+    description: The prefix of branch name | pass a comma separated list to match multiple prefixes | leave empty to match all branches
     required: false
     default: ''
   branch-prefix-separator:
     description: The separator between branch prefix and jira ticket
     required: false
     default: '/'
-  jira-ticket-regex:
-    description: The regex to match Jira ticket in branch name
+  issue-tracker-url:
+    description: The URL of Issue tracker
+    required: true
+  issue-ticket-regex:
+    description: The regex to match Issue ticket in branch name
     required: false
-    default: '([A-Z]+-[0-9]+)'
-  jira-ticket-separator:
-    description: The separator between Jira ticket and Jira ticket summary
+    default: '([A-Z]+-\d+)'
+  issue-ticket-separator:
+    description: The separator between Issue ticket and Issue ticket summary
     required: false
     default: '-'
+  issue-ticket-container-punctuation:
+    description: "The punctuation to wrap Issue ticket in pull request title. Possible values: none, square-brackets, parentheses, curly-brackets, angle-brackets, double-quotes, single-quotes"
+    required: false
+    default: 'square-brackets'
+outputs:
+  issue-ticket-number:
+    description: The Issue ticket number
 runs:
   using: node16
   main: action/index.js
