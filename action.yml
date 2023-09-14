@@ -1,6 +1,27 @@
 ---
 name: Update Pull Request from Branch name
 description: Updates Pull Request title and body from branch name
+author: kigary
+inputs:
+  repo-token:
+    description: The GITHUB_TOKEN secret
+    required: true
+  branch-prefix:
+    description: The prefix of branch name | pass a comma separated list to match multiple prefixes
+    required: false
+    default: ''
+  branch-prefix-separator:
+    description: The separator between branch prefix and jira ticket
+    required: false
+    default: '/'
+  jira-ticket-regex:
+    description: The regex to match Jira ticket in branch name
+    required: false
+    default: '([A-Z]+-[0-9]+)'
+  jira-ticket-separator:
+    description: The separator between Jira ticket and Jira ticket summary
+    required: false
+    default: '-'
 runs:
   using: node16
   main: action/index.js
