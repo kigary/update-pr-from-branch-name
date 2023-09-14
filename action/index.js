@@ -9811,6 +9811,8 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2085);
 const github = __nccwpck_require__(5097);
 
+const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
 async function run() {
     try {
         const inputs = {
@@ -9845,8 +9847,8 @@ async function run() {
         const [_, jiraTicketNumber, jiraTicketSummary] = jiraTicket.split(jiraTicketRegex);
         core.info(`Jira ticket number: ${jiraTicketNumber}`);
         core.info(`Jira ticket summary: ${jiraTicketSummary}`);
-        const jiraTicketSummaryNormalized = jiraTicketSummary
-          .replace(new RegExp(inputs.jiraTicketSeparator, 'gi'), ' ').trim().toLowerCase();
+        const jiraTicketSummaryNormalized = capitalize(jiraTicketSummary
+          .replace(new RegExp(inputs.jiraTicketSeparator, 'gi'), ' ').trim());
         const jiraTicketUrl = `[${jiraTicketNumber}](https://betconstruct.atlassian.net/browse/${jiraTicketNumber})`;
         core.info(`Jira ticket url: ${jiraTicketUrl}`);
         core.info(`Jira ticket summary normalized: ${jiraTicketSummaryNormalized}`);
