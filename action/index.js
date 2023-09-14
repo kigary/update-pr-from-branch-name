@@ -9887,7 +9887,7 @@ async function run() {
 
         core.info(`Issue ticket url: ${issueTicketUrl}`);
 
-        const title = `${issueTicketContainerPunctuation[0] ?? ''} ${issueTicketNumber} ${issueTicketContainerPunctuation[0] ?? ''} ${issueTicketSummaryNormalized}`;
+        const title = `${issueTicketContainerPunctuation[0] ?? ''} ${issueTicketNumber} ${issueTicketContainerPunctuation[1] ?? ''} ${issueTicketSummaryNormalized}`;
         core.info(`Title: ${title}`);
 
         const initialBody = github.context.payload.pull_request.body ?? '';
