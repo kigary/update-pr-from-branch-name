@@ -9853,7 +9853,7 @@ async function run() {
 
         const title = `[${jiraTicketNumber}] ${jiraTicketSummaryNormalized}`;
         core.info(`Title: ${title}`);
-        const initialBody = github.context.payload.pull_request.body;
+        const initialBody = github.context.payload.pull_request.body ?? '';
         const body = `This PR is related to ${jiraTicketUrl}\n\n${initialBody}`;
         core.info(`Body: ${body}`);
 
@@ -9866,7 +9866,7 @@ async function run() {
         }
 
         const octokit = github.getOctokit(inputs.token);
-        const response = await octokit.pulls.update(request);
+        const response = await octokit.rest.pulls.update(request);
 
         core.info(`Response: ${response.status}`);
         if (response.status !== 200) {
