@@ -78,11 +78,17 @@ async function run() {
         core.info(`Issue ticket url: ${issueTicketUrl}`);
 
         const title = `${issueTicketContainerPunctuation[0] ?? ''} ${issueTicketNumber} ${issueTicketContainerPunctuation[1] ?? ''} ${issueTicketSummaryNormalized}`;
-        core.info(`Title: ${title}`);
+        core.info(`Pull Request title will be changed to: ${title}`);
 
         const initialBody = github.context.payload.pull_request.body ?? '';
-        const body = `This PR is related to ${issueTicketUrl}\n\n${initialBody}`;
-        core.info(`Body: ${body}`);
+        let body = initialBody;
+        const bodyPrefix = `This PR is related to ${issueTicketUrl}`;
+        if(body.includes(bodyPrefix)) {
+            core.info(`Body already contains ${bodyPrefix}. Skipping...`);
+        } else {
+            body = `${bodyPrefix}\n\n${initialBody}`;
+            core.info(`Pull Request body will be changed to: : ${body}`);
+        }
 
         const request = {
             owner: github.context.repo.owner,
