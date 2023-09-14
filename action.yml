@@ -1,0 +1,6 @@
+---
+name: Update Pull Request from Branch name
+description: Updates Pull Request title and body from branch name
+runs:
+  using: node16
+  main: action/index.js
