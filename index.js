@@ -27,8 +27,9 @@ async function run() {
 
         const issueTicketContainerPunctuationPossibleValues = Object.keys(ISSUE_TICKET_CONTAINER_PUNCTUATION);
         if(!issueTicketContainerPunctuationPossibleValues.includes(inputs.issueTicketContainerPunctuation)) {
-            core.setFailed(`Issue ticket container punctuation ${inputs.issueTicketContainerPunctuation} is not allowed. Allowed values are ${issueTicketContainerPunctuationPossibleValues}`);
-            return;
+            core.setFailed(`Issue ticket container punctuation ${inputs.issueTicketContainerPunctuation} is not allowed.\n
+            Allowed values are ${issueTicketContainerPunctuationPossibleValues}`);
+            return 1;
         }
         const issueTicketContainerPunctuation = ISSUE_TICKET_CONTAINER_PUNCTUATION[inputs.issueTicketContainerPunctuation];
 
@@ -43,30 +44,42 @@ async function run() {
 
         const [prefix, issueTicket] = headBranchName.split(inputs.branchPrefixSeparator);
         if (!issueTicket) {
-            core.info(`Issue ticket is not found in branch name`);
-            return;
+            core.info(`Branch prefix separator "${inputs.branchPrefixSeparator}" is not found in branch name. Skipping Pull Request update...`);
+            return 0;
         }
+
         if(!inputs.branchPrefix) {
             core.info('Branch prefix is not set. Skipping...');
         } else {
             if (!branchPrefixes.includes(prefix)) {
                 core.setFailed(`Branch prefix ${prefix} is not allowed. Allowed prefixes are ${branchPrefixes}`);
-                return;
+                return 1;
             }
         }
+
         const issueTicketRegex = new RegExp(inputs.issueTicketRegex);
         core.info(`Issue ticket regex: ${issueTicketRegex}`);
+
         const [_, issueTicketNumber, issueTicketSummary] = issueTicket.split(issueTicketRegex);
         core.info(`Issue ticket number: ${issueTicketNumber}`);
+
+        if(!issueTicketNumber) {
+            core.info(`Issue ticket number is not found in branch name. Skipping Pull Request update...`);
+            return 0;
+        }
+
         const issueTicketSummaryNormalized = capitalize(issueTicketSummary
           .replace(new RegExp(inputs.issueTicketSeparator, 'gi'), ' ').trim());
+        core.info(`Issue ticket summary: ${issueTicketSummaryNormalized}`);
+
         const issueTicketUrl = `[${issueTicketNumber}](${inputs.issueTrackerUrl
           .replace(/\/$/, '')}/${issueTicketNumber})`;
+
         core.info(`Issue ticket url: ${issueTicketUrl}`);
-        core.info(`Issue ticket summary: ${issueTicketSummaryNormalized}`);
 
         const title = `${issueTicketContainerPunctuation[0] ?? ''} ${issueTicketNumber} ${issueTicketContainerPunctuation[0] ?? ''} ${issueTicketSummaryNormalized}`;
         core.info(`Title: ${title}`);
+
         const initialBody = github.context.payload.pull_request.body ?? '';
         const body = `This PR is related to ${issueTicketUrl}\n\n${initialBody}`;
         core.info(`Body: ${body}`);
@@ -85,10 +98,15 @@ async function run() {
         core.info(`Response: ${response.status}`);
         if (response.status !== 200) {
             core.error('Updating the pull request has been failed');
+            return 1;
         }
+
         core.setOutput('issue-ticket-number', issueTicketNumber);
+        core.setOutput('issue-ticket-url', issueTicketUrl);
+        core.setOutput('pull-request-title', request.title);
     } catch (error) {
         core.setFailed(error.message);
+        return 1;
     }
 }
 

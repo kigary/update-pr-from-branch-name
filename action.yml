@@ -32,6 +32,10 @@ inputs:
 outputs:
   issue-ticket-number:
     description: The Issue ticket number
+  issue-ticket-url:
+    description: The Issue ticket URL
+  pull-request-title:
+    description: The Pull Request title
 runs:
   using: node16
   main: action/index.js
