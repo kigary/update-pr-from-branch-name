@@ -44,11 +44,7 @@ async function run() {
         const title = `[${jiraTicketNumber}] ${jiraTicketSummaryNormalized}`;
         core.info(`Title: ${title}`);
         const initialBody = github.context.payload.pull_request.body;
-        const body =
-          ```This PR is related to ${jiraTicketUrl}
-        
-             ${initialBody}
-          ```;
+        const body = `This PR is related to ${jiraTicketUrl}\n\n${initialBody}`;
         core.info(`Body: ${body}`);
 
         const request = {
