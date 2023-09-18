@@ -11,7 +11,7 @@
     "url": "git+https://github.com/kigary/update-pr-from-branch-name.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "kigary",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kigary/update-pr-from-branch-name/issues"
