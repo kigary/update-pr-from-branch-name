@@ -22,7 +22,7 @@ This action requires the following inputs:
 - `branch-prefix` (optional): The prefix of the branch name. You can pass a comma-separated list to match multiple prefixes. Leave it empty to match all branches.
 - `branch-prefix-separator` (optional): The separator used between the branch prefix and the Jira ticket. Default is `'/'`.
 - `issue-tracker-url` (required): The URL of the issue tracker where issue ticket links will point to.
-- `issue-ticket-regex` (optional): A regular expression to match and extract the issue ticket number from the branch name. Default is `'([A-Z]+-\\d+)'`.
+- `issue-ticket-regex` (optional): A regular expression to match and extract the issue ticket number from the branch name. Default is `'([A-Z]+-\d+)'`.
 - `issue-ticket-separator` (optional): The separator used between the issue ticket number and the issue ticket summary. Default is `'-'`.
 - `issue-ticket-container-punctuation` (optional): The punctuation style to wrap the issue ticket in the PR title. Possible values are `'none'`, `'square-brackets'`, `'parentheses'`, `'curly-brackets'`, `'angle-brackets'`, `'double-quotes'`, `'single-quotes'`. Default is `'square-brackets'`.
 
