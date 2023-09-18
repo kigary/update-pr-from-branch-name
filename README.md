@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Update Pull Request from Branch Name** GitHub Action is designed to automatically update the title and body of a pull request (PR) based on the branch name. This action is especially useful when working with PRs that follow a specific naming convention, containing an issue ticket number and a summary.
+The **Update Pull Request from Branch** GitHub Action is designed to automatically update the title and body of a pull request (PR) based on the branch name. This action is especially useful when working with PRs that follow a specific naming convention, containing an issue ticket number and a summary.
 
 **Author**: kigary
 
@@ -56,13 +56,13 @@ jobs:
 
       - name: Update PR Title
         id: update_title
-        uses: kigary/update-pull-request-action@v1
+        uses: kigary/update-pr-from-branch-name@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           branch-prefix: feat,bugfix
           branch-prefix-separator: _
           issue-tracker-url: https://example.com/issues
-          issue-ticket-regex: '[0-9]+'
+          issue-ticket-regex: '([A-Z]+-\d+)'
           issue-ticket-separator: -
           issue-ticket-container-punctuation: square-brackets
 
