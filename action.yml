@@ -1,5 +1,5 @@
 ---
-name: Update Pull Request from Branch name
+name: Update Pull Request from Branch
 description: Updates Pull Request title and body from branch name
 author: kigary
 inputs:
