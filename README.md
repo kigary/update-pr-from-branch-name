@@ -1,4 +1,4 @@
-# GitHub Action Documentation: Update Pull Request from Branch Name
+# Update Pull Request from Branch Name
 
 ## Overview
 
