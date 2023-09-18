@@ -2,6 +2,9 @@
 name: Update Pull Request from Branch
 description: Updates Pull Request title and body from branch name
 author: kigary
+branding:
+  icon: 'git-pull-request'
+  color: 'blue'
 inputs:
   repo-token:
     description: The GITHUB_TOKEN secret
