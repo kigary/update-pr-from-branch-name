@@ -40,5 +40,5 @@ outputs:
   pull-request-title:
     description: The Pull Request title
 runs:
-  using: node16
+  using: node20
   main: action/index.js
